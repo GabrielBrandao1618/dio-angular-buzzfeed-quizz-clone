@@ -18,8 +18,16 @@
     </button>
   </div>
 
-  <div *ngIf="finished" class="quizz_results">
+  <div
+    *ngIf="finished"
+    class="quizz_results"
+    [ngClass]="{
+      hero: answerSelected?.id === 'hero',
+      villain: answerSelected?.id === 'villain'
+    }"
+  >
     <h1>O Seu resultado é:</h1>
-    <p>{{ answerSelected }}</p>
+    <p>{{ answerSelected?.text }}</p>
+    <img [src]="answerSelected?.image" alt="" />
   </div>
 </div>

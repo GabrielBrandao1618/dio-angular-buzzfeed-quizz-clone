@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import quizz_questions from '../../../assets/data/quizz_questions.json';
 import { Option, Question } from 'src/app/model/question';
+import { QuizResult } from 'src/app/model/quiz-data';
 
 @Component({
   selector: 'app-quizz',
@@ -14,7 +15,7 @@ export class QuizzComponent implements OnInit {
   questionSelected: Question = this.questions[0];
 
   answers: string[] = [];
-  answerSelected: string = '';
+  answerSelected?: QuizResult;
 
   questionIndex: number = 0;
   questionMaxIndex: number = 0;

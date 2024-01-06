@@ -78,11 +78,21 @@
   height: 350px;
   background-color: #1f0539;
   border-radius: 10px;
+  gap: 1rem;
   padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.quizz_results img {
+  border-radius: 1rem;
+}
+.quizz_results.hero {
+  background-color: #051739;
+}
+.quizz_results.villain {
+  background-color: #1f0539;
 }
 
 @media (max-width: 600px) {
