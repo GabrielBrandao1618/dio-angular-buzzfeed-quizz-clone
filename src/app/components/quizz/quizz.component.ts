@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import quizz_questions from '../../../assets/data/quizz_questions.json';
+import { Option, Question } from 'src/app/model/question';
 
 @Component({
   selector: 'app-quizz',
@@ -9,8 +10,8 @@ import quizz_questions from '../../../assets/data/quizz_questions.json';
 export class QuizzComponent implements OnInit {
   title: string = '';
 
-  questions: any;
-  questionSelected: any;
+  questions: Question[] = [];
+  questionSelected: Question = this.questions[0];
 
   answers: string[] = [];
   answerSelected: string = '';
@@ -24,22 +25,17 @@ export class QuizzComponent implements OnInit {
 
   ngOnInit(): void {
     if (quizz_questions) {
-      this.finished = false;
       this.title = quizz_questions.title;
 
       this.questions = quizz_questions.questions;
       this.questionSelected = this.questions[this.questionIndex];
 
-      this.questionIndex = 0;
       this.questionMaxIndex = this.questions.length;
-
-      console.log(this.questionIndex);
-      console.log(this.questionMaxIndex);
     }
   }
 
-  playerChoose(value: string) {
-    this.answers.push(value);
+  playerChoose(value: Option) {
+    this.answers.push(value.alias);
     this.nextStep();
   }
 
@@ -49,7 +45,7 @@ export class QuizzComponent implements OnInit {
     if (this.questionMaxIndex > this.questionIndex) {
       this.questionSelected = this.questions[this.questionIndex];
     } else {
-      const finalAnswer: string = await this.checkResult(this.answers);
+      const finalAnswer: string = this.checkResult(this.answers);
       this.finished = true;
       this.answerSelected =
         quizz_questions.results[
@@ -58,7 +54,7 @@ export class QuizzComponent implements OnInit {
     }
   }
 
-  async checkResult(anwsers: string[]) {
+  checkResult(anwsers: string[]) {
     const result = anwsers.reduce((previous, current, i, arr) => {
       if (
         arr.filter((item) => item === previous).length >
